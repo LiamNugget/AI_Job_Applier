@@ -1,142 +1,130 @@
-Adaptive AI Job Application Bot
-Overview
+# Adaptive AI Job Application Bot
 
-This project idea is for a self-learning automation tool that can find and fill job application forms directly on company websites.
-The goal is to reduce repetitive manual form-filling by allowing the system to recognise and adapt to new input fields automatically.
+## Overview
 
-Over time, the bot learns how to handle more form variations by remembering how similar fields were filled in the past.
-It is designed as a personal assistant or research tool, not for large-scale scraping or automated mass applications.
+An intelligent, self-learning automation tool that finds and fills job application forms directly on company websites. The system automatically recognizes and adapts to new input fields, learning from past interactions to handle increasingly diverse form variations.
 
-Core Concept
+Designed as a personal assistant and research tool - not for large-scale scraping or automated mass applications.
 
-Detects and analyses input fields on career or job application pages.
+---
 
-Reads each field’s attributes (label, placeholder, name, etc.).
+## Core Concept
 
-Matches these attributes to known categories (e.g. “Name”, “Email”, “Upload CV”).
+1. Detects and analyzes input fields on career or job application pages
+2. Reads each field's attributes (label, placeholder, name, etc.)
+3. Matches these attributes to known categories (e.g. "Name", "Email", "Upload CV")
+4. Prompts for decisions when encountering unknown fields (skip, fill, or custom response)
+5. Stores new rules for future use
+6. Learns over time, improving accuracy with each site visited
 
-When encountering an unknown field, prompts for a decision (skip, fill, or custom response).
+---
 
-Stores the new rule for future use.
+## Key Features
 
-Learns over time, improving accuracy with each site it visits.
+- Form field detection using browser automation
+- Intelligent field mapping through fuzzy matching and AI models
+- Persistent local database of learned field rules
+- Configurable filters and preferences
+- Optional dashboard for reviewing or editing learned data
 
-Key Features
+---
 
-Form field detection using browser automation
+## Suggested Tech Stack
 
-Intelligent field mapping through fuzzy matching and AI models
+### Programming Language
 
-Persistent local database of learned field rules
+**Python** (Recommended for rapid prototyping, scraping, and AI integration)
+- Alternative: Node.js if you prefer JavaScript across the stack
 
-Configurable filters and preferences
+### Web Automation
 
-Optional dashboard for reviewing or editing learned data
+**Playwright** (Modern and reliable browser automation for dynamic websites)
+- Alternative: Selenium (wider community support, slightly slower)
 
-Suggested Tech Stack
-Programming Language
+### Data Parsing
 
-Python – Recommended for rapid prototyping, scraping, and AI integration
+**BeautifulSoup4** (Easy HTML parsing for static pages)
+- Alternative: lxml (faster but more complex)
 
-Alternative: Node.js (if you prefer JavaScript across the stack)
+### Storage
 
-Web Automation
+**SQLite** (Simple file-based database for storing rules and form mappings)
+- Alternative: PostgreSQL for multi-user or scalable versions
 
-Playwright – Modern and reliable browser automation for dynamic websites
+### Fuzzy Matching and Semantic Analysis
 
-Alternative: Selenium (wider community support, slightly slower)
+**FuzzyWuzzy or RapidFuzz** (For simple string similarity)
+- Optional: Sentence Transformers (e.g. `all-MiniLM-L6-v2`) for semantic matching using embeddings
 
-Data Parsing
+### Backend / API (if dashboard is added)
 
-BeautifulSoup4 – Easy HTML parsing for static pages
+**Flask or FastAPI** (Lightweight Python web frameworks)
+- Alternative: Laravel (PHP) or Express.js (Node.js)
 
-Alternative: lxml (faster but more complex)
+### Frontend (for dashboard)
 
-Storage
+**React or Vue.js** (For managing field mappings visually)
+- Alternative: Basic HTML templates with Flask for simpler setups
 
-SQLite – Simple file-based database for storing rules and form mappings
+### Scheduling
 
-Alternative: PostgreSQL (for multi-user or scalable versions)
+**Cron or Celery** (To run periodic scans or updates)
 
-Fuzzy Matching and Semantic Analysis
+### Optional AI Integration
 
-FuzzyWuzzy or RapidFuzz – For simple string similarity
+**OpenAI API** (To generate cover letters or predict field meanings)
+- Alternative: Local language models using `transformers` library for offline use
 
-Optional: Sentence Transformers (e.g., all-MiniLM-L6-v2) for semantic matching using embeddings
+---
 
-Backend / API (if dashboard is added)
-
-Flask or FastAPI – Lightweight Python web frameworks
-
-Alternative: Laravel (PHP) or Express.js (Node.js)
-
-Frontend (for dashboard)
-
-React or Vue.js – For managing field mappings visually
-
-Alternative: Basic HTML templates with Flask for simpler setups
-
-Scheduling
-
-Cron or Celery – To run periodic scans or updates
-
-Optional AI Integration
-
-OpenAI API – To generate cover letters or predict field meanings
-
-Alternative: Local language models using transformers library (for offline use)
-
-Learning Method
+## Learning Method
 
 The bot uses a layered recognition system:
 
-Rule-based: Direct text checks (e.g., “if ‘email’ in label”)
+1. **Rule-based** - Direct text checks (e.g. "if 'email' in label")
+2. **Fuzzy matching** - Detects close matches like "E-mail" or "Contact Email"
+3. **Semantic comparison** - Uses vector similarity to detect meaning
+4. **User input** - Stores new instructions when unknown fields appear
 
-Fuzzy matching: Detects close matches like “E-mail” or “Contact Email”
+---
 
-Semantic comparison: Uses vector similarity to detect meaning
+## Example Data Flow
 
-User input: Stores new instructions when unknown fields appear
+1. Bot visits a company career page
+2. It finds all form elements (`input`, `textarea`, `select`)
+3. For each field, it identifies its purpose using rules and text similarity
+4. If the field is recognized, it auto-fills it
+5. If the field is unknown, it logs the label and asks for guidance
+6. It stores the decision so next time it knows what to do automatically
 
-Example Data Flow
+---
 
-Bot visits a company career page.
+## Database Example
 
-It finds all form elements (input, textarea, select).
+| Field Label | Normalized Intent | Action | Value | Confidence |
+|-------------|-------------------|--------|-------|------------|
+| Full Name | name | fill | Liam Nugent | 1.00 |
+| E-mail Address | email | fill | liamnugent@hizhub.com | 0.95 |
+| Upload Resume | cv_upload | fill | /path/to/cv.pdf | 0.98 |
+| Preferred Pronouns | pronouns | skip | NULL | 0.90 |
 
-For each field, it identifies its purpose using rules and text similarity.
+---
 
-If the field is recognised, it auto-fills it.
+## Development Roadmap
 
-If the field is unknown, it logs the label and asks for guidance.
+1. Create scraper for static job pages
+2. Add Playwright to handle dynamic pages
+3. Implement rule-based matching and fuzzy logic
+4. Build local database for saving field knowledge
+5. Add learning layer for new fields
+6. Optionally add a web dashboard for review and control
+7. Experiment with AI-assisted cover letter or resume matching
 
-It stores the decision so next time, it knows what to do automatically.
+---
 
-Database Example
-Field Label	Normalized Intent	Action	Value	Confidence
-Full Name	name	fill	Liam Nugent	1.00
-E-mail Address	email	fill	liamnugent@hizhub.com
-	0.95
-Upload Resume	cv_upload	fill	/path/to/cv.pdf	0.98
-Preferred Pronouns	pronouns	skip	NULL	0.90
-Development Roadmap
+## Important Notes
 
-Create scraper for static job pages
-
-Add Playwright to handle dynamic pages
-
-Implement rule-based matching and fuzzy logic
-
-Build local database for saving field knowledge
-
-Add learning layer for new fields
-
-Optionally add a web dashboard for review and control
-
-Experiment with AI-assisted cover letter or resume matching
-
-Notes
-
-This project should respect website robots.txt files and legal restrictions.
-
-It should not perform automated submissions without explicit user consent.
+- This project should respect website `robots.txt` files and legal restrictions
+- It should not perform automated submissions without explicit user consent
+- Intended for personal use as a research and productivity tool
+- Always review applications before final submission
