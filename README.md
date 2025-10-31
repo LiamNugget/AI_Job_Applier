@@ -2,22 +2,18 @@
 
 ## Overview
 
-An intelligent, self-learning automation tool that finds and fills job application forms directly on company websites. The system automatically recognizes and adapts to new input fields, learning from past interactions to handle increasingly diverse form variations.
+This project is a self-learning automation tool that can find and fill job application forms directly on company websites. The goal is to reduce repetitive manual form-filling by allowing the system to recognize and adapt to new input fields automatically.
 
-Designed as a personal assistant and research tool - not for large-scale scraping or automated mass applications.
-
----
+Over time, the bot learns how to handle more form variations by remembering how similar fields were filled in the past. It is designed as a personal assistant or research tool, not for large-scale scraping or automated mass applications.
 
 ## Core Concept
 
 1. Detects and analyzes input fields on career or job application pages
 2. Reads each field's attributes (label, placeholder, name, etc.)
 3. Matches these attributes to known categories (e.g. "Name", "Email", "Upload CV")
-4. Prompts for decisions when encountering unknown fields (skip, fill, or custom response)
-5. Stores new rules for future use
-6. Learns over time, improving accuracy with each site visited
-
----
+4. When encountering an unknown field, prompts for a decision (skip, fill, or custom response)
+5. Stores the new rule for future use
+6. Learns over time, improving accuracy with each site it visits
 
 ## Key Features
 
@@ -26,8 +22,6 @@ Designed as a personal assistant and research tool - not for large-scale scrapin
 - Persistent local database of learned field rules
 - Configurable filters and preferences
 - Optional dashboard for reviewing or editing learned data
-
----
 
 ## Suggested Tech Stack
 
@@ -75,8 +69,6 @@ Designed as a personal assistant and research tool - not for large-scale scrapin
 **OpenAI API** (To generate cover letters or predict field meanings)
 - Alternative: Local language models using `transformers` library for offline use
 
----
-
 ## Learning Method
 
 The bot uses a layered recognition system:
@@ -85,8 +77,6 @@ The bot uses a layered recognition system:
 2. **Fuzzy matching** - Detects close matches like "E-mail" or "Contact Email"
 3. **Semantic comparison** - Uses vector similarity to detect meaning
 4. **User input** - Stores new instructions when unknown fields appear
-
----
 
 ## Example Data Flow
 
@@ -97,8 +87,6 @@ The bot uses a layered recognition system:
 5. If the field is unknown, it logs the label and asks for guidance
 6. It stores the decision so next time it knows what to do automatically
 
----
-
 ## Database Example
 
 | Field Label | Normalized Intent | Action | Value | Confidence |
@@ -107,8 +95,6 @@ The bot uses a layered recognition system:
 | E-mail Address | email | fill | liamnugent@hizhub.com | 0.95 |
 | Upload Resume | cv_upload | fill | /path/to/cv.pdf | 0.98 |
 | Preferred Pronouns | pronouns | skip | NULL | 0.90 |
-
----
 
 ## Development Roadmap
 
@@ -120,11 +106,7 @@ The bot uses a layered recognition system:
 6. Optionally add a web dashboard for review and control
 7. Experiment with AI-assisted cover letter or resume matching
 
----
-
-## Important Notes
+## Notes
 
 - This project should respect website `robots.txt` files and legal restrictions
 - It should not perform automated submissions without explicit user consent
-- Intended for personal use as a research and productivity tool
-- Always review applications before final submission
